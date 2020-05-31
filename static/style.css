@@ -35,7 +35,7 @@
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.second-row {
+.row4 {
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -63,7 +63,10 @@ body {
 }
 
 #footer p {
-  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* margin: 0; */
   font-size: 16px;
   color: white;
 }
@@ -79,22 +82,33 @@ body {
 }
 
 #map {
-  height: 500px;
+  height: 600px;
   margin-bottom: 30px;
+  margin-top: 10px;
+  border:1px solid black;
+  width: 100%;
 }
 
-#map, #bar {
+.shaded-box {
+  background-color: lightblue;
+}
+
+#bar {
   margin-top: 10px;
   border:1px solid black;
 }
 
 #pie {
-  margin-top: 20px;
   border:1px solid black;
 }
 
 #bar-other {
-  margin-top: -60px;
+  margin-top: 10px;
+  border:1px solid black;
+}
+
+#interactive {
+  background-color: lightblue;
   border:1px solid black;
 }
 
@@ -103,7 +117,6 @@ body {
 }
 
 .panel {
-  margin-top: 20px;
   border: 1px solid black;
 }
 
@@ -113,6 +126,10 @@ select {
   padding: 8px;
   color: #8e979f;
   outline: none;
+}
+
+.leaflet-control-layers {
+  text-align: left;
 }
 
 /* .margin-top-50 {

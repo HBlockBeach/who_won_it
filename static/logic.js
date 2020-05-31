@@ -5,29 +5,26 @@ d3.json(queryUrl, function(data) {
   createFeatures(data.features);
 });
 
-
-
 function createFeatures(earthquakeData) {
-
   // Give each feature a popup
   function onEachFeature(feature, layer) {
     layer.bindPopup("<h3>" + feature.properties.place +
       "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
   }
 
-  // Create a GeoJSON layer containing the features array
+  // Create GeoJSON layer for election data
   var earthquakes = L.geoJSON(earthquakeData, {
     onEachFeature: onEachFeature
   });
 
+  // Create GeoJSON layer of state coordinates for color coding
   var statesDataCoded = L.geoJSON(statesData);
 
-  // Sending our earthquakes layer to the createMap function
+  // Call createMap function
   createMap(earthquakes, statesDataCoded);
 }
 
 function createMap(earthquakes, statesDataCoded) {
-
   // Define background layer
   var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
@@ -39,7 +36,7 @@ function createMap(earthquakes, statesDataCoded) {
   // Create overlay objects
   var overlayMaps = {
     Earthquakes: earthquakes,
-    //States: statesDataCoded //,
+    States: statesDataCoded //,
     // Electoral Votes: electoralVotes,
     // Turnout Rate: turnout2016
   };
@@ -48,7 +45,7 @@ function createMap(earthquakes, statesDataCoded) {
   var myMap = L.map("map", {
     center: [37.09, -95.71],
     zoom: 4,
-    layers: [lightmap, earthquakes, statesDataCoded]
+    layers: [lightmap, earthquakes]//, statesDataCoded]
   });
 
  
@@ -56,13 +53,13 @@ function createMap(earthquakes, statesDataCoded) {
   // Pass in our baseMaps and overlayMaps
   // Add the layer control to the map
   L.control.layers(overlayMaps, null, {
-      collapsed: false
+      collapsed: false,
   }).addTo(myMap);
 }
 
-//statesDataCoded.addTo(myMap);
+// Add title to layer control
+$('<h6 id="mapTitle">Map Controls</h6>').insertBefore('div.leaflet-control-layers-base');
 
-//L.geoJSON(statesData).addTo(myMap);
 
 // function to change state color based on margin of victory
 // function getColor(mov) {
