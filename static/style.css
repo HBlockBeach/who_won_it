@@ -47,40 +47,27 @@ html {
 }
 
 body {
-  /* Padding bottom by footer height */
   padding-bottom: 80px;
 }
 
 #footer {
   position: absolute;
   bottom: 0;
-  width: 100%; /* Set the fixed height of the footer here */
+  width: 100%;
   height: 10px;
   padding-top: 20px;
   padding-bottom: 40px;
-  text-align: center;
   background-color: rgba(5, 91, 190, 0.829);
 }
 
 #footer p {
-  position: absolute;
-  top: 0;
-  left: 0;
-  /* margin: 0; */
   font-size: 16px;
   color: white;
+  text-align: center !important;
+  margin-top: 0px;
 }
 
-/* The footer is positioned at the bottom of the page */
-.footer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  min-height: 100px;
-  background: lightgray;
-}
-
+/* Charts, map, and table */
 #map {
   height: 600px;
   margin-bottom: 30px;
@@ -90,7 +77,8 @@ body {
 }
 
 .shaded-box {
-  background-color: lightblue;
+  background-color: rgba(5, 91, 190, 0.432);
+  width: 100%;
 }
 
 #bar {
@@ -120,6 +108,7 @@ body {
   border: 1px solid black;
 }
 
+/* Dropdown */
 select {
   display: block;
   width: 100%;
@@ -128,12 +117,28 @@ select {
   outline: none;
 }
 
+/* Layer Control */
 .leaflet-control-layers {
   text-align: left;
 }
 
-/* .margin-top-50 {
-  margin-top: 50px;
-} */
+/* Legend */
+.legend {
+  line-height: 18px;
+  color: #555;
+}
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
+}
 
-/* add media queries */
+div.info.legend {
+  background-color: rgb(253, 243, 227);
+  padding: 10px;
+  color: black
+}
+
+/* Media queries */
