@@ -1,6 +1,12 @@
-var queryUrl = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=" +
+var stateDataUrl = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=" +
   "2014-01-02&maxlongitude=-69.52148437&minlongitude=-123.83789062&maxlatitude=48.74894534&minlatitude=25.16517337";
 
+d3.csv("../data/final_data/state_level_data.csv").then(function(data,err) {
+  if (err) throw err;
+  console.log(data[0]);
+  });
+
+  
 // placeholder functions to simulate color-coded map with state coordinates data
 function getColor(d) {
     return d > 1000 ? '#800026' :
@@ -13,9 +19,9 @@ function getColor(d) {
                       '#FFEDA0';
 }
 
-function stateStyle(feature) {
+function stateStyle() {
     return {
-        fillColor: getColor(feature.properties.density),
+        fillColor: getColor(stateElectionData.percent_won-0.50),
         weight: 1,
         opacity: 1,
         color: 'gray',
@@ -32,7 +38,7 @@ function stateStyle(feature) {
 //             mov < -10 ? '#0571b0':
 // }
 
-d3.json(queryUrl, function(data) {
+d3.json(stateDataUrl, function(data) {
   createFeatures(data.features);
 });
 
