@@ -17,22 +17,23 @@
   color: red;
   font-size: 75px;
   font-weight: bold;
-  font-family: 'Open Sans', sans serif;
+  font-family: fantasy;
   margin-top: 10px;
   margin-bottom: 0;
 }
 
 .transbox h2{
   text-align: center !important;
-  color: red;
+  color: black;
   font-size: 50px;
   font-weight: bold;
   font-family: 'Open Sans', sans serif;
+  margin-top: 10px;
 }
 
 .transbox p {
   text-align: center;
-  color: red;
+  color:black;
   font-size: 24px;
   font-family: 'Open Sans', sans serif;
 }
@@ -124,21 +125,21 @@ select {
   text-align: left;
 }
 
-/* Legend */
-/* .legend {
-  line-height: 18px;
-  color: #555;
-} */
+.legend {
+  border: 1.5px solid lightgrey;
+  border-radius: 5px;
+}
 .legend i {
   width: 18px;
   height: 18px;
   float: left;
   margin-right: 8px;
   opacity: 0.7;
+  border: 1px solid black;
 }
 
 div.info.legend {
-  background-color: rgb(253, 243, 227);
+  background-color: white;
   padding: 10px;
   color: black
 }
@@ -149,12 +150,11 @@ div.info.legend {
     font-size: 50px;
     font-weight: bold;
     width: 400px;
-    height: 250px;
-    margin-top: 0px;
-    margin-bottom: 10px;
+    height: 200px;
+    margin: 0 auto;
     background-color: white;
-    position: relative;
-    left: 32%;
+    /* position: relative;
+    left: 32%; */
     border-radius: 10px;
     perspective: 1400px;
 }
