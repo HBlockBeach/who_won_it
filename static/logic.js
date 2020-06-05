@@ -1,3 +1,25 @@
+// Animation for header
+var card = document.querySelector(".card");
+var playing = false;
+
+card.addEventListener('click',function() {
+  if(playing)
+    return;
+  
+  playing = true;
+  anime({
+    targets: card,
+    scale: [{value: 1}, {value: 1.4}, {value: 1, delay: 250}],
+    rotateY: {value: '+=180', delay: 200},
+    easing: 'easeInOutSine',
+    duration: 400,
+    complete: function(anime){
+       playing = false;
+    }
+  });
+});
+
+
 var queryUrl = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=" +
   "2014-01-02&maxlongitude=-69.52148437&minlongitude=-123.83789062&maxlatitude=48.74894534&minlatitude=25.16517337";
 
@@ -27,7 +49,7 @@ function stateStyle(feature) {
 // function getColor(mov) {
 //     return  mov > 10 ? '#ca0020'
 //             (mov >= 5 && mov <= 10) ? '#f4a582' :
-//             (mov >= -5 && mov <= 5) ? '#f7f7f7' :
+//             (mov >= -5 && mov <= 5) ? '#ffffbf' :
 //             (mov >= -5 && mov <= -10) ? '#92c5de' :
 //             mov < -10 ? '#0571b0':
 // }
@@ -73,7 +95,7 @@ function createMap(earthquakes, statesDataCoded) {
   var myMap = L.map("map", {
     center: [37.09, -95.71],
     zoom: 4,
-    layers: [lightmap, statesDataCoded]//, statesDataCoded]
+    layers: [lightmap, statesDataCoded]
   });
  
   // Create the layer control
@@ -86,8 +108,8 @@ function createMap(earthquakes, statesDataCoded) {
 
     legend.onAdd = function () {
         var div = L.DomUtil.create('div', 'info legend');
-        var margins = ["< -10","-10 to -5","-5 to 5", "5 to 10", "> 10"];
-        var colors = ['#0571b0','#92c5de', '#f7f7f7', '#f4a582', '#ca0020'];
+        var margins = ["Democrat (>15%)","Democrat (5-15%)","Swing State (5%)", "Republican (5-15%)", "Republican (>15%)"];
+        var colors = ['#0571b0','#92c5de', '#ffffbf', '#f4a582', '#ca0020'];
 
         // loop through our arrays and generate a label with a colored square for each item
         for (var i = 0; i < margins.length; i++) {
@@ -98,6 +120,9 @@ function createMap(earthquakes, statesDataCoded) {
         };    
 
     legend.addTo(myMap);
+
+    $(".leaflet-control-layers").prepend("<h5><label>Layer Control</label></h5>");
+    $("div.info.legend").prepend("<h5><label>Margin Of Victory</label></h5>");
 }
 
 
