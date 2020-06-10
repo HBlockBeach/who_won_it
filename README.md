@@ -2,9 +2,13 @@
 
 ## Team:
 - Hunter Block-Beach
-- Evan Kamis
 - Valerie Lobas
 - Suraj Thyagaraj
+
+## Project Overview
+<p> The aim of this project is to provide a dashboard for visualizing historical US Presidential election data. Using python, pandas, flask, sqllite, sqlalchemy, html, css, js, Leaflet js library, Anime js library, the data is presented as a set of easy to interpret interactive charts that are sources and updates from three sqllite databases. <br> User interaction includes a layered map with views for electoral college votes and margin of victory, charts for 3rd party candidate votes and turnout rate, and two interactive charts that are filterable on state and year that show a data table of relevant information as well as a pie chart showing percentage of votes won by each republican, democrat, and the aggregated other.            
+
+</p>
 
 ## Relevant Files:
 
@@ -22,4 +26,24 @@
 1. Manipulated raw data for table creation| politics_data_raw.ipynb
 2. flask?
 
+#### HTML/CSS/JS
+
+* [/static/](static)
+1. HTML | index.html
+2. Anime Javascript (new library) | animation for flip card | anime.min.js
+3. Javascript code | logic.js
+4. CSS | style.css
+
+#### Project Work
+
+* [/project/](project)
+1. Project  Proposal | CWR-DA-BC-Project_II-Proposal.docx
+2. Wireframe for website | WebpageWireframe.JPG
+
+#### Flask Routes
+
+1. State Level |
+2. Year Level |
+3.
+4.
 
