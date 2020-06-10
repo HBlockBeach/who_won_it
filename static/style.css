@@ -85,7 +85,9 @@ body {
 }
 
 #bar {
-  margin-top: 10px;
+  margin: 10px;
+  padding: 10px;
+  height: 400px;
   border:1px solid black;
 }
 
@@ -94,7 +96,9 @@ body {
 }
 
 #bar-other {
-  margin-top: 10px;
+  margin: 10px;
+  padding: 10px;
+  height: 400px;
   border:1px solid black;
 }
 

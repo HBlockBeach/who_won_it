@@ -19,19 +19,8 @@ card.addEventListener('click',function() {
   });
 });
 
-var queryUrl = "API LINK";
-
-// placeholder functions to simulate color-coded map with state coordinates data
-// function getColor(d) {
-//     return d > 1000 ? '#800026' :
-//            d > 500  ? '#BD0026' :
-//            d > 200  ? '#E31A1C' :
-//            d > 100  ? '#FC4E2A' :
-//            d > 50   ? '#FD8D3C' :
-//            d > 20   ? '#FEB24C' :
-//            d > 10   ? '#FED976' :
-//                       '#FFEDA0';
-// }
+// Leaflet Map
+var stateURL = "http://127.0.0.1:5000/state";
 
 function stateStyle(feature) {
     return {
@@ -57,7 +46,7 @@ for(var i=0; i < statesData.length; i++) {
   var stateCoordinates = object.values(state).forEach(state => properties.name, properties.geometry.coordinates);
 }
 
-d3.json(queryUrl, function(data) {
+d3.json(stateURL, function(data) {
   var features = data.features;
   var features_2016 = object.values(features).forEach(state => (year==2016));
   var fullData = Object.assign({}, features_2016, stateCoordinates);
@@ -168,18 +157,78 @@ function createMap(statesDataCoded, elections, electoralVotes, fullData) {
     $("div.info.legend").prepend("<h5><label>Margin Of Victory</label></h5>");
 }
 
+// Other API URLs for charts
+var turnoutURL = "http://127.0.0.1:5000/turnout"
+var yearURL = "http://127.0.0.1:5000/year"
 
-    
-
-
-// Function to build bar chart for turnout rate
-// function createBar(response) {
-
-//     // Initialize an array to hold bike markers
-//     var turnoutRate = [];
+// Build bar chart for total votes
+d3.json(turnoutURL).then(function(turnoutData) {
+  console.log(turnoutData);
   
-//     // Loop through the stations array
-//     for (var i = 0; i < data.length; i++) {
-//       turnoutRate.push(data[i].turnout);
-//     }
-// }
+  d3.json(stateURL).then(function(yearData) {
+    var trace1 = [{
+      type: "bar",
+      x: turnoutData.map(row => row[1]),
+      y: turnoutData.map(row => row[2]) 
+    }]
+
+    var layout = {
+      xaxis: {
+        title: "Year",
+        range: [1972,2020],
+        tickangle: -45,
+        tickmode: 'linear',
+        tick0: 1972,
+        dtick: 4 
+      },
+      yaxis: {
+        title: "Total Votes",
+        showgrid: true,
+        range: [0,150000000],
+        tickmode: 'linear',
+        tick0: 0,
+        dtick: 25000000
+      }
+    }
+
+    Plotly.newPlot("bar", trace1, layout);
+
+  });
+});
+
+// Build bar chart for 3rd party candidate votes
+d3.json(yearURL).then(function(yearData) {
+  console.log(yearData);
+
+  d3.json(turnoutURL).then(function(turnoutData) {
+    otherVotes = yearData.map(row => row[9]);
+    totalVotes = turnoutData.map(row => row[2]);
+
+  var trace2 = [{
+    type: "bar",
+    x: yearData.map(row => row[1]),
+    y: (otherVotes / totalVotes)
+  }]
+
+  var layout2 = {
+    xaxis: {
+      title: "Year",
+      range: [1972,2020],
+      tickangle: -45,
+      tickmode: 'linear',
+      tick0: 1972,
+      dtick: 4 
+    },
+    yaxis: {
+      title: "Votes",
+      showgrid: true
+      // range: [0,150000000],
+      // tickmode: 'linear',
+      // tick0: 0,
+      // dtick: 25000000
+    }
+  }
+
+    Plotly.newPlot("bar-other", trace2, layout2);
+  });
+});

@@ -125,18 +125,79 @@ function createMap(earthquakes, statesDataCoded) {
     $("div.info.legend").prepend("<h5><label>Margin Of Victory</label></h5>");
 }
 
+// API URLs for charts
+turnoutURL = "http://127.0.0.1:5000/turnout"
+yearURL = "http://127.0.0.1:5000/year"
+stateURL = "http://127.0.0.1:5000/state"
 
-    
-
-
-// Function to build bar chart for turnout rate
-// function createBar(response) {
-
-//     // Initialize an array to hold bike markers
-//     var turnoutRate = [];
+// Build bar chart for total votes
+d3.json(turnoutURL).then(function(turnoutData) {
+  console.log(turnoutData);
   
-//     // Loop through the stations array
-//     for (var i = 0; i < data.length; i++) {
-//       turnoutRate.push(data[i].turnout);
-//     }
-// }
+  d3.json(stateURL).then(function(yearData) {
+    var trace1 = [{
+      type: "bar",
+      x: turnoutData.map(row => row[1]),
+      y: turnoutData.map(row => row[2]) 
+    }]
+
+    var layout = {
+      xaxis: {
+        title: "Year",
+        range: [1972,2020],
+        tickangle: -45,
+        tickmode: 'linear',
+        tick0: 1972,
+        dtick: 4 
+      },
+      yaxis: {
+        title: "Total Votes",
+        showgrid: true,
+        range: [0,150000000],
+        tickmode: 'linear',
+        tick0: 0,
+        dtick: 25000000
+      }
+    }
+
+    Plotly.newPlot("bar", trace1, layout);
+
+  });
+});
+
+// Build bar chart for 3rd party candidate votes
+d3.json(yearURL).then(function(yearData) {
+  console.log(yearData);
+
+  d3.json(turnoutURL).then(function(turnoutData) {
+    otherVotes = yearData.map(row => row[9]);
+    totalVotes = turnoutData.map(row => row[2]);
+
+  var trace2 = [{
+    type: "bar",
+    x: yearData.map(row => row[1]),
+    y: (otherVotes / totalVotes)
+  }]
+
+  var layout2 = {
+    xaxis: {
+      title: "Year",
+      range: [1972,2020],
+      tickangle: -45,
+      tickmode: 'linear',
+      tick0: 1972,
+      dtick: 4 
+    },
+    yaxis: {
+      title: "Votes",
+      showgrid: true
+      // range: [0,150000000],
+      // tickmode: 'linear',
+      // tick0: 0,
+      // dtick: 25000000
+    }
+  }
+
+    Plotly.newPlot("bar-other", trace2, layout2);
+  });
+});
