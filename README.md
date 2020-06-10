@@ -32,7 +32,7 @@
 1. [HTML](index.html)
 2. [Anime Javascript (new library) | animation for flip card](static/anime.min.js)
 3. [Javascript code](static/logic.js)
-4. [CSS](style.css)
+4. [CSS](static/style.css)
 
 #### Project Work
 
