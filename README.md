@@ -29,16 +29,16 @@
 #### HTML/CSS/JS
 
 * [/static/](static)
-1. HTML | index.html
-2. Anime Javascript (new library) | animation for flip card | anime.min.js
-3. Javascript code | logic.js
-4. CSS | style.css
+1. [HTML](index.html)
+2. [Anime Javascript (new library) | animation for flip card](static/anime.min.js)
+3. [Javascript code](static/logic.js)
+4. [CSS](style.css)
 
 #### Project Work
 
 * [/project/](project)
-1. Project  Proposal | CWR-DA-BC-Project_II-Proposal.docx
-2. Wireframe for website | WebpageWireframe.JPG
+1. [Project Proposal](project/CWR-DA-BC-Project_II-Proposal.docx)
+2. [Wireframe for website](WebpageWireframe.JPG)
 
 #### Flask Routes
 
