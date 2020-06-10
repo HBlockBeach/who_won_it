@@ -38,7 +38,7 @@
 
 * [/project/](project)
 1. [Project Proposal](project/CWR-DA-BC-Project_II-Proposal.docx)
-2. [Wireframe for website](WebpageWireframe.JPG)
+2. [Wireframe for website](project/WebpageWireframe.JPG)
 
 #### Flask Routes
 
