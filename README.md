@@ -6,7 +6,7 @@
 - Suraj Thyagaraj
 
 ## Project Overview
-<div align="center"> <p> The aim of this project is to provide a dashboard for visualizing historical US Presidential election data. Using python, pandas, flask, sqllite, sqlalchemy, html, css, js, Leaflet js library, Anime js library, the data is presented as a set of easy to interpret interactive charts that are sources and updates from three sqllite databases. <br> <br>User interaction includes a layered map with views for electoral college votes and margin of victory, charts for 3rd party candidate votes and turnout rate, and two interactive charts that are filterable on state and year that show a data table of relevant information as well as a pie chart showing percentage of votes won by each republican, democrat, and the aggregated other. </div>           
+<div align="center"> <p> The aim of this project is to provide a dashboard for visualizing historical US Presidential election data. Using python, pandas, flask, sqllite, sqlalchemy, html, css, js, Leaflet js library, Anime js library, the data is presented as a set of easy to interpret interactive charts that are sourced and updated from three sqllite databases. <br> <br>User interaction includes a layered map with views for electoral college votes and margin of victory, charts for 3rd party candidate votes and turnout rate, and two interactive charts that are filterable on state and year that show a data table of relevant information as well as a pie chart showing percentage of votes won by each republican, democrat, and the aggregated other. </div>           
 
 </p>
 
