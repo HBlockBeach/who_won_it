@@ -15,11 +15,11 @@
 #### Raw Data:
 * [/data/working_data/](data/working_data)
 1.  [Presidential election data, 1976-2016](data/working_date/1976-2016-president.csv)
-2. Turnout data, 1980-2014 | 1980-2014 November General Election - Turnout Rates.csv
-3. Turnout data, 2016| 2016 November General Election - Turnout Rates.csv
-4. Available Electoral votes, 1976-2016| Available Electoral Votes .csv
-5. Candidate with list of parties| parties.csv
-6. Manipulated party data| allparties.csv
+2. [Turnout data, 1980-2014](1980-2014_November_General_Election_Turnout_Rates.csv)
+3. [Turnout data, 2016](2016_November_General_Election_Turnout_Rates.csv)
+4. [Available Electoral votes, 1976-2016](Available_Electoral_Votes.csv)
+5. [Candidate with list of parties](parties.csv)
+6. [Manipulated party data](allparties.csv)
 
 #### Jupyter Notebooks:
 * [/data/working_data/](data/working_data) ###will change when others are added
