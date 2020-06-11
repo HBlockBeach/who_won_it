@@ -167,16 +167,24 @@ d3.json(turnoutURL).then(function(turnoutData) {
 
 // Build bar chart for 3rd party candidate votes
 d3.json(yearURL).then(function(yearData) {
-  console.log(yearData);
+  //console.log(yearData);
 
   d3.json(turnoutURL).then(function(turnoutData) {
     otherVotes = yearData.map(row => row[9]);
     totalVotes = turnoutData.map(row => row[2]);
+    
+    var votePercentage = [];
+    for (var i = 0; i < otherVotes.length; i++) {
+      votePercentage.push(otherVotes[i] / totalVotes[i] * 100);
+    }
+
+    console.log(votePercentage);
 
   var trace2 = [{
     type: "bar",
     x: yearData.map(row => row[1]),
-    y: (otherVotes / totalVotes)
+    y: votePercentage,
+    orientation: "v"
   }]
 
   var layout2 = {

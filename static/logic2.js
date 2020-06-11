@@ -24,7 +24,7 @@ var stateURL = "http://127.0.0.1:5000/state";
 
 function stateStyle(feature) {
     return {
-        fillColor: getColor(feature.COLUMN),
+        fillColor: getColor(feature[10]),
         weight: 1,
         opacity: 1,
         color: 'gray',
@@ -33,34 +33,53 @@ function stateStyle(feature) {
 }
 
 // Function to change state color based on margin of victory
-function getColor(TABLE) {
-    return  table.mov > 65 ? '#ca0020':
-            (table.mov > 55 && mov <= 65) ? '#f4a582' :
-            (table.mov >= -55 && mov <= 55) ? '#ffffbf' :
-            (table.mov < -55 && mov >= -65) ? '#92c5de' :
-            table.mov < -65 ? '#0571b0':
-                              '#ffffff';
+function getColor(mov) {
+    return  mov > 10 ? '#0571b0' :
+            (mov >= 5 && mov <= 10) ? '#92c5de' :
+            (mov >= -5 && mov <= 5) ? '#ffffbf' :
+            (mov >= -5 && mov <= -10) ? '#f4a582' :
+            mov < -10 ? '#ca0020' :
+                        '#ffffff';
 }
 
-for(var i=0; i < statesData.length; i++) {
-  var stateCoordinates = object.values(state).forEach(state => properties.name, properties.geometry.coordinates);
-}
+// View statesData JSON
+var x = JSON.stringify(statesData);
+var test = JSON.parse(x);
+console.log(test);
 
-d3.json(stateURL, function(data) {
-  var features = data.features;
-  var features_2016 = object.values(features).forEach(state => (year==2016));
+// Create array with state name and coordinates to merge with state API data
+for (i=0; i<51; i++) {
+  var stateNames = [];
+  
+  Object.entries(test.features[i].properties).map(([key, value]) => stateNames.push(value));
+  
+  var stateCoordinates =
+    Object.entries(test.features[i].geometry).map(([key, value]) => (value));
+}
+  
+console.log(stateNames);
+
+// Call API for state-level data
+d3.json(stateURL).then(function(stateLevelData) {
+  var features = stateLevelData;
+  var features_2016 = features.filter(state => (state[1]==2016));
   var fullData = Object.assign({}, features_2016, stateCoordinates);
+
+  console.log(features_2016);
+
   createFeatures(fullData);
 });
 
 function createFeatures(fullData) {
   // Create circle markers with popups for election results data
-  for(var i=0; i < stateCoordinates.length; i++) {  
-    var elections = L.circle(stateCoordinates.geometry, {
+  for(var i=0; i < fullData.length; i++) {  
+    var elections = L.circle(fullData.geometry, {
       color: 'white',
       radius: 100 
     });
   }
+
+  console.log(elections);
 
   // Create layer for electoral vote data per state
     var electoralVotes = L.Class.extend({
@@ -127,8 +146,8 @@ function createMap(statesDataCoded, elections, electoralVotes, fullData) {
   });
 
   // Create popups
-  var winner = 
-  elections.bindPopup("<p>Winner: " + fullData.winner + "</p><br><p>Margin of Victory: " + fullData.mov + "</p>").addTo(myMap)
+  // var winner = 
+  // elections.bindPopup("<p>Winner: " + fullData.winner + "</p><br><p>Margin of Victory: " + fullData.mov + "</p>").addTo(myMap)
  
   // Create the layer control
   L.control.layers(overlayMaps, null, {
@@ -163,9 +182,16 @@ var yearURL = "http://127.0.0.1:5000/year"
 
 // Build bar chart for total votes
 d3.json(turnoutURL).then(function(turnoutData) {
-  console.log(turnoutData);
-  
-  d3.json(stateURL).then(function(yearData) {
+   
+  d3.json(stateURL).then(function(stateData) {
+    eligibleVoterPop = [];
+
+    for (i=0; i<stateData; i++) {
+      eligibleVoters = stateData[6];
+      eligibleVoterPop.push(eligibleVoters);
+    }
+    console.log(eligibleVoterPop);
+    
     var trace1 = [{
       type: "bar",
       x: turnoutData.map(row => row[1]),
@@ -198,16 +224,21 @@ d3.json(turnoutURL).then(function(turnoutData) {
 
 // Build bar chart for 3rd party candidate votes
 d3.json(yearURL).then(function(yearData) {
-  console.log(yearData);
-
+  
   d3.json(turnoutURL).then(function(turnoutData) {
     otherVotes = yearData.map(row => row[9]);
     totalVotes = turnoutData.map(row => row[2]);
+    
+    var votePercentage = [];
+    for (var i = 0; i < otherVotes.length; i++) {
+      votePercentage.push(otherVotes[i] / totalVotes[i]);
+    }
 
   var trace2 = [{
     type: "bar",
     x: yearData.map(row => row[1]),
-    y: (otherVotes / totalVotes)
+    y: votePercentage,
+    orientation: "v"
   }]
 
   var layout2 = {
@@ -220,12 +251,10 @@ d3.json(yearURL).then(function(yearData) {
       dtick: 4 
     },
     yaxis: {
-      title: "Votes",
-      showgrid: true
-      // range: [0,150000000],
-      // tickmode: 'linear',
-      // tick0: 0,
-      // dtick: 25000000
+      title: "3rd Party Votes (%)",
+      showgrid: true,
+      tickformat: ',.0%',
+      range: [0,0.2]
     }
   }
 
