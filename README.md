@@ -6,7 +6,7 @@
 - Suraj Thyagaraj
 
 ## Project Overview:
-<div align="center"> <p> The aim of this project is to provide a dashboard for visualizing historical US Presidential election data. The data is presented as a set of easy to interpret interactive and static charts that are sourced and updated with data served from three Flask-created APIs.<br><br> Tools used include:
+<p> The aim of this project is to provide a dashboard for visualizing historical US Presidential election data. The data is presented as a set of easy to interpret interactive and static charts that are sourced and updated with data served from three Flask-created APIs.<br><br> Tools used include:
   
 - Python
 - Pandas
@@ -20,7 +20,7 @@
 - Mapbox
 - Anime.js library<br><br>
 
-User interaction includes a layered map with views for electoral college votes and margin of victory, bar charts for 3rd party candidate votes and turnout rate, and two interactive charts that are filterable on state and year that show a data table of relevant information as well as a pie chart showing percentage of votes won by each republican, democrat, and the aggregated other. </div>           
+User interaction includes a layered map with views for electoral college votes and margin of victory, bar charts for 3rd party candidate votes and turnout rate, and two interactive charts that are filterable on state and year that show a data table of relevant information as well as a pie chart showing percentage of votes won by each republican, democrat, and the aggregated other.          
 
 </p>
 
