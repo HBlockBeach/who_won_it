@@ -53,16 +53,15 @@
         <div class=shaded-box>
             <div class="row row2">
                 <div class="col-md-8 interactive"> 
-                    <h3> Historical Election Results</h3>
+                    <h2><u> Historical Election Results</u></h2>
                 </div>
             </div>
 
             <div class="row row3">
                 <div class="col-md-2">
-                    <div class="dropdown">
+                    <!-- <div class="dropdown">
                         <h5> Select State</h5>
                         <h5></h5>
-                        <!-- Update function name, if needed -->
                         <select id="selState" onchange="changePlots(this.value)">
                             <option value="Alabama">Alabama</option>
                             <option value="Alaska">Alaska</option>
@@ -117,11 +116,9 @@
                           </select>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2"> -->
                     <div class="dropdown">
-                        <h5> Select Year</h5>
-                        <h5></h5>
-                        <!-- Update function name, if needed -->
+                        <h3> Select Year</h3>
                         <select id="selYear" onchange="changePlots(this.value)">
                             <option value="1976">1976</option>
                             <option value="1980">1980</option>
@@ -140,9 +137,10 @@
             </div>
             <div class="row row4">
                 <div class="col-md-6">
+                    <h3>Election Data</h3>
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <p class="panel-title">Data Table</p>
+                            <p class="panel-title"></p>
                             <div id="table" class="panel-body">
                                 <table><thead>
                                     <tr>
@@ -162,7 +160,8 @@
                 </div>
             
                 <div class="col-md-6">
-                    <div id="pie">Pie Chart</div>  
+                    <h3>Voter Results By Candidate</h3>
+                    <div id="pie"></div>  
                 </div>
             </div>     
         </div>
