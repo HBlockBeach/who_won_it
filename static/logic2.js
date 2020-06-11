@@ -42,10 +42,7 @@ function getColor(mov) {
                         '#ffffff';
 }
 
-// View statesData JSON
-var x = JSON.stringify(statesData);
-var test = JSON.parse(x);
-console.log(test);
+
 
 // Create array with state name and coordinates to merge with state API data
 for (i=0; i<51; i++) {
@@ -180,47 +177,42 @@ function createMap(statesDataCoded, elections, electoralVotes, fullData) {
 var turnoutURL = "http://127.0.0.1:5000/turnout"
 var yearURL = "http://127.0.0.1:5000/year"
 
-// Build bar chart for total votes
+// Build bar chart for turnout %
 d3.json(turnoutURL).then(function(turnoutData) {
-   
-  d3.json(stateURL).then(function(stateData) {
-    eligibleVoterPop = [];
+  totalVotes = turnoutData.map(row => row[2]);
+  eligibleVotes = turnoutData.map(row => row[3]);
+  
+  var turnoutPercentage = [];
+  for (var i = 0; i < totalVotes.length; i++) {
+    turnoutPercentage.push(totalVotes[i] / eligibleVotes[i]);
+  }
+  
+  var trace1 = [{
+    type: "bar",
+    x: turnoutData.map(row => row[1]),
+    y: turnoutPercentage 
+  }]
 
-    for (i=0; i<stateData; i++) {
-      eligibleVoters = stateData[6];
-      eligibleVoterPop.push(eligibleVoters);
+  var layout = {
+    xaxis: {
+      title: "Year",
+      range: [1972,2020],
+      tickangle: -45,
+      tickmode: 'linear',
+      tick0: 1972,
+      dtick: 4 
+    },
+    yaxis: {
+      title: "Voter Turnout (%)",
+      showgrid: true,
+      tickformat: ',.0%',
+      range: [0.4, 0.7]
     }
-    console.log(eligibleVoterPop);
-    
-    var trace1 = [{
-      type: "bar",
-      x: turnoutData.map(row => row[1]),
-      y: turnoutData.map(row => row[2]) 
-    }]
-
-    var layout = {
-      xaxis: {
-        title: "Year",
-        range: [1972,2020],
-        tickangle: -45,
-        tickmode: 'linear',
-        tick0: 1972,
-        dtick: 4 
-      },
-      yaxis: {
-        title: "Total Votes",
-        showgrid: true,
-        range: [0,150000000],
-        tickmode: 'linear',
-        tick0: 0,
-        dtick: 25000000
-      }
-    }
+  }
 
     Plotly.newPlot("bar", trace1, layout);
 
   });
-});
 
 // Build bar chart for 3rd party candidate votes
 d3.json(yearURL).then(function(yearData) {
