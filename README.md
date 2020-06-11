@@ -71,3 +71,8 @@ User interaction includes a layered map with views for electoral college votes a
 2. Year Level 
 3. Turnout Data
 
+#### Project Management
+
+1. [Trello Board](https://trello.com/b/frfXB46k/project-2-election-data)
+
+
