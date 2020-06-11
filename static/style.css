@@ -88,6 +88,10 @@ body {
   padding: 5px;
 }
 
+#pie2 {
+  border:1px solid black;
+}
+
 #bar {
   margin: 10px;
   padding: 10px;
