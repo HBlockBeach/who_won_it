@@ -28,57 +28,52 @@ card.addEventListener('click',function() {
 
 // Function to color-code map
 function getColor(margin) {
-  return margin > 15 ? "red" :
-         margin > 5  ? "orange" :
-         margin > -5  ? "yellow" :
-         margin > -15  ? "lightblue" :
-                   "blue";
-  // switch(true) {
-  //   case margin > 15:
-  //     return "red";
-  //   case margin > 5:
-  //     return "orange";
-  //   case margin > -5:
-  //     return "yellow";
-  //   case margin > -15:
-  //     return "lightblue";
-  //   case margin < -15:
-  //     return "blue";
-  // }
+  //console.log(`getting color for ${margin}`);
+  switch(true) {
+    case (margin > 15):
+      return 'red';
+    case (margin > 5):
+      return 'orange';
+    case (margin > -5):
+      return 'yellow';
+    case (margin > -15):
+      return 'lightblue';
+    case (margin < -15):
+      return 'blue';
+    default:
+      return 'black';
+  }
 }
 
 var stateURL = "http://127.0.0.1:5000/state"
 
 function getMargin(state) {
   d3.json(stateURL).then(function(stateLevelData) {
+    //console.log(`getMargin running for ${state}`);
     var features = stateLevelData;
     var filtered2016 = features.filter(row => (row[1]==2016));
     for (i=0; i < filtered2016.length; i++) {
       if(filtered2016[i][2] == state){
         var margin = filtered2016[i][10];
         getColor(margin);
-      }
+      } 
     }
 });
 }
 
 function stateStyle(feature) {
   return {
-    fillColor: getMargin(feature.properties.name),
-    weight: 1,
-    opacity: 1,
-    color: 'white',
-    fillOpacity: 0.7
-  }
+      fillColor: getColor(feature[10]),
+      weight: 1,
+      opacity: 1,
+      color: 'gray',
+      fillOpacity: 0.7
+  };
 }
-
-// Create GeoJSON layer of state coordinates for color coding
-var statesDataCoded = L.geoJSON(statesData, {style: stateStyle});
 
 var myMap = L.map("map", {
   center: [37.09, -95.71],
-  zoom: 4,
-  layers: [statesDataCoded]
+  zoom: 4
 });
 
 var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -88,18 +83,77 @@ var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{
   accessToken: API_KEY
 }).addTo(myMap);
 
+// Create GeoJSON layer
+var geoJSON = L.geoJSON(statesData, {
+  style: stateStyle,
+  onEachFeature: function(feature, layer) {
+    layer.on({
+      mouseover: function(event) {
+        layer = event.target;
+        layer.setStyle({
+          fillOpacity: 0.9
+        });
+      },
+      mouseout: function(event) {
+        layer = event.target;
+        layer.setStyle({
+          fillOpacity: 0.7,
+          color: 'gray'
+        });
+      },
+    });
+    layer.bindPopup("<p>Winner: " + winner2016(feature.properties.name) + "<p><br><p>Margin of Victory: " + margin2016(feature.properties.name) + "</p>");
+  }
+}).addTo(myMap);
 
-// var x = JSON.stringify(statesLatLng);
-// var test = JSON.parse(x);
-// console.log(test);
+function margin2016(state) {
+  d3.json(stateURL).then(function(stateLevelData) {
+    var features = stateLevelData;
+    var filtered2016 = features.filter(row => (row[1]==2016));
+    for (i=0; i < filtered2016.length; i++) {
+      if(filtered2016[i][2] == state){
+        var margin = filtered2016[i][10];
+        console.log(margin);
+        return margin;
+      } 
+    }
+});
+}
 
-// var overlayMaps = {
-//   States: statesDataCoded
-//     Election_Results: elections,
-//     Electoral_Votes: electoralVotes
-//     // Turnout Rate: turnout2016
-//};
+function winner2016(state) {
+  d3.json(stateURL).then(function(stateLevelData) {
+    var features = stateLevelData;
+    var filtered2016 = features.filter(row => (row[1]==2016));
+    for (i=0; i < filtered2016.length; i++) {
+      if(filtered2016[i][2] == state){
+        var winner = filtered2016[i][3];
+        console.log(winner);
+        return winner;
+      } 
+    }
+});
+}
 
+// Add color-coded legend to map
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function () {
+    var div = L.DomUtil.create('div', 'info legend');
+    var margins = ["Democrat (>15%)","Democrat (5-15%)","Swing State (5%)", "Republican (5-15%)", "Republican (>15%)"];
+    var colors = ['#0571b0','#92c5de', '#ffffbf', '#f4a582', '#ca0020'];
+
+    // loop through our arrays and generate a label with a colored square for each item
+    for (var i = 0; i < margins.length; i++) {
+        div.innerHTML +=
+        '<i style="background:' + colors[i] + '"></i> ' + margins[i] + '<br>';
+        }
+    return div;
+    };    
+
+legend.addTo(myMap);
+
+$(".leaflet-control-layers").prepend("<h5><label>Layer Control</label></h5>");
+$("div.info.legend").prepend("<h5><label>Margin Of Victory</label></h5>");
 
 /////////////////
 // BAR CHARTS //
@@ -184,24 +238,28 @@ d3.json(yearURL).then(function(yearData) {
   });
 });
 
+//////////////
 //PIE CHART //
+//////////////
 function createchart(yearinput){
   d3.json(yearURL).then(function(yearData) {
     //console.log(yearData);
       var dataForInput = yearData.filter(row => row[1] == yearinput);
-
       candidate1 = dataForInput.map(row => row[2]);
       candidate2 = dataForInput.map(row => row[5]);
       candidate3 = dataForInput.map(row => row[8]);
-      candidate1votes = dataForInput.map(row => row[3]);
-      candidate2votes = dataForInput.map(row => row[6]);
-      candidate3votes = dataForInput.map(row => row[9]);
-
-      console.log(candidate1votes);
-    
+      candidate1votes = dataForInput.map(row => row[3]/10000);
+      candidate2votes = dataForInput.map(row => row[6]/10000);
+      candidate3votes = dataForInput.map(row => row[9]/10000);
+      votes1 = Math.round(candidate1votes)
+      votes2 = Math.round(candidate2votes)
+      votes3 = Math.round(candidate3votes)
+      label = [candidate1, candidate2, candidate3]
+      value = [votes1, votes2, votes3]
+      console.log(votes1, votes2, votes3);
       var data = [{
-        y: [candidate1votes, candidate2votes, candidate3votes],
-        x: [candidate1, candidate2, candidate3],
+        labels: label,
+        values: value,
         type: 'pie'
       }]
       var layout = {
@@ -210,6 +268,17 @@ function createchart(yearinput){
       }
       Plotly.newPlot('pie', data, layout);
     });}
+// Input default chart for 2016
+createchart(1976);
 
-//var yearinput = 2016;
-createchart("2016");
+d3.selectAll("#selYear").on("change", updatePage);
+function updatePage() {
+  // Use D3 to select the dropdown menu
+  var dropdownMenu = d3.selectAll("#selYear").node();
+  // Assign the dropdown menu item ID to a variable
+  var dropdownMenuID = dropdownMenu.id;
+  // Assign the dropdown menu option to a variable
+  var selectedOption = dropdownMenu.value;
+  console.log(dropdownMenuID);
+  console.log(selectedOption);
+  createchart(selectedOption);}
