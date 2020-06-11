@@ -282,3 +282,44 @@ function updatePage() {
   console.log(dropdownMenuID);
   console.log(selectedOption);
   createchart(selectedOption);}
+
+  //PIE CHART 2//
+  function createchart2(yearinput){
+    d3.json(yearURL).then(function(yearData) {
+      //console.log(yearData);
+        var dataForInput = yearData.filter(row => row[1] == yearinput);
+        candidate1 = dataForInput.map(row => row[2]);
+        candidate2 = dataForInput.map(row => row[5]);
+        candidate3 = dataForInput.map(row => row[8]);
+        candidate1votes = dataForInput.map(row => row[4]);
+        candidate2votes = dataForInput.map(row => row[7]);
+        candidate3votes = dataForInput.map(row => row[10]);
+        votes1 = Math.round(candidate1votes)
+        votes2 = Math.round(candidate2votes)
+        votes3 = Math.round(candidate3votes)
+        label = [candidate1, candidate2, candidate3]
+        value = [votes1, votes2, votes3]
+        var data = [{
+          labels: label,
+          values: value,
+          type: 'pie'
+        }]
+        var layout = {
+          height: 400,
+          width: 500
+        }
+        Plotly.newPlot('pie2', data, layout);
+      });}
+  //var yearinput = 2016;
+  d3.selectAll("#selYear").on("change", updatePage);
+  function updatePage() {
+    // Use D3 to select the dropdown menu
+    var dropdownMenu = d3.selectAll("#selYear").node();
+    // Assign the dropdown menu item ID to a variable
+    var dropdownMenuID = dropdownMenu.id;
+    // Assign the dropdown menu option to a variable
+    var selectedOption = dropdownMenu.value;
+    console.log(dropdownMenuID);
+    console.log(selectedOption);
+    createchart(selectedOption);
+    createchart2(selectedOption)}
