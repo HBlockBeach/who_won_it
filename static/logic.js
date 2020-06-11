@@ -140,3 +140,79 @@ function createMap(earthquakes, statesDataCoded) {
 //       turnoutRate.push(data[i].turnout);
 //     }
 // }
+
+// Other API URLs for charts
+var turnoutURL = "http://127.0.0.1:5000/turnout"
+var yearURL = "http://127.0.0.1:5000/year"
+
+// Build bar chart for total votes
+d3.json(turnoutURL).then(function(turnoutData) {
+  console.log(turnoutData);
+  
+  d3.json(stateURL).then(function(yearData) {
+    var trace1 = [{
+      type: "bar",
+      x: turnoutData.map(row => row[1]),
+      y: turnoutData.map(row => row[2]) 
+    }]
+
+    var layout = {
+      xaxis: {
+        title: "Year",
+        range: [1972,2020],
+        tickangle: -45,
+        tickmode: 'linear',
+        tick0: 1972,
+        dtick: 4 
+      },
+      yaxis: {
+        title: "Total Votes",
+        showgrid: true,
+        range: [0,150000000],
+        tickmode: 'linear',
+        tick0: 0,
+        dtick: 25000000
+      }
+    }
+
+    Plotly.newPlot("bar", trace1, layout);
+
+  });
+});
+
+// Build bar chart for 3rd party candidate votes
+d3.json(yearURL).then(function(yearData) {
+  console.log(yearData);
+
+  d3.json(turnoutURL).then(function(turnoutData) {
+    otherVotes = yearData.map(row => row[9]);
+    totalVotes = turnoutData.map(row => row[2]);
+
+  var trace2 = [{
+    type: "bar",
+    x: yearData.map(row => row[1]),
+    y: (otherVotes / totalVotes)
+  }]
+
+  var layout2 = {
+    xaxis: {
+      title: "Year",
+      range: [1972,2020],
+      tickangle: -45,
+      tickmode: 'linear',
+      tick0: 1972,
+      dtick: 4 
+    },
+    yaxis: {
+      title: "Votes",
+      showgrid: true
+      // range: [0,150000000],
+      // tickmode: 'linear',
+      // tick0: 0,
+      // dtick: 25000000
+    }
+  }
+
+    Plotly.newPlot("bar-other", trace2, layout2);
+  });
+});

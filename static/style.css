@@ -197,3 +197,6 @@ div.info.legend {
 }
 
 /* Media queries */
+.table-head{
+  text-align: center !important;
+}
