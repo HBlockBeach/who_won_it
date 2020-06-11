@@ -7,7 +7,7 @@
 
 ## Project Overview
 <div align="center"> <p> The aim of this project is to provide a dashboard for visualizing historical US Presidential election data. The data is presented as a set of easy to interpret interactive and static charts that are sourced and updated with data from three sqlite databases, then served as APIs through flask routes.<br> Tools used include:
-  * python
+  * [python]
   * pandas
   * flask
   * sqllite
