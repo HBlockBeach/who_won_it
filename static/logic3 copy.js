@@ -102,7 +102,9 @@ var geoJSON = L.geoJSON(statesData, {
         });
       },
     });
-    layer.bindPopup("<p>Winner: " + (winner2016(feature.properties.name)) + "<p><br><p>Margin of Victory: " + margin2016(feature.properties.name) + "</p>");
+
+    let winner =  winner2016(feature.properties.name);
+    layer.bindPopup("<p>Winner: " + winner + "<p><br><p>Margin of Victory: " + margin2016(feature.properties.name) + "</p>");
   }
 }).addTo(myMap);
 
