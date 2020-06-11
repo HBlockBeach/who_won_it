@@ -60,7 +60,7 @@ User interaction includes a layered map with views for electoral college votes a
 
 #### Database
 
-* [/sqlite/](sqlite)
+* [/](/)
 1. [State-level election data 1976-2016](sqlite/StatesDB7)
 2. [Year-level election data 1976-2016](sqlite/YearDB1)
 2. [Voter turnout data 1976-2016](sqlite/TurnoutDB1)
