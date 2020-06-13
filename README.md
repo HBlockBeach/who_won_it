@@ -57,6 +57,7 @@ User interaction includes a layered map with views for electoral college votes a
 * [/project/](project)
 1. [Project Proposal](project/CWR-DA-BC-Project_II-Proposal.docx)
 2. [Wireframe for website](project/WebpageWireframe.JPG)
+3. [Google Slide Presentation](https://docs.google.com/presentation/d/17g2pkRBL8VQxejt5YE3nkZLkNLQlvulEk7Y5RkHSCeE/edit?usp=sharing)
 
 #### Database
 
