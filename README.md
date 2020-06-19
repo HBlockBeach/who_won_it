@@ -75,5 +75,6 @@ User interaction includes a layered map with views for electoral college votes a
 #### Project Management
 
 1. [Trello Board](https://trello.com/b/frfXB46k/project-2-election-data)
+2. [Presentation Slides](https://docs.google.com/presentation/d/17g2pkRBL8VQxejt5YE3nkZLkNLQlvulEk7Y5RkHSCeE/edit)
 
 
